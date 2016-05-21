@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block script %}
+<script src="https://code.jquery.com/jquery-2.2.2.min.js"></script>
+<script>
+$(document).ready(function() {
+  $('#pause').click(function() {
+    $.post('/mp3/pause');
+  });
+  $('#stop').click(function() {
+    $.post('/mp3/stop');
+  });
+  $('#next').click(function() {
+    $.post('/mp3/next');
+  });
+  $('#previous').click(function() {
+    $.post('/mp3/previous');
+  });
+
+});
+</script>
+	{% endblock %}
+
+{% block content %}
+<div class="mp3">
+	<h1>Mp3 Player</h1>
+	<p>
+          <button type="button" id="pause" class="btn btn-success">Pause</button>
+          <button type="button" id="stop" class="btn btn-danger">Stop</button>
+          <button type="button" id="next" class="btn btn-success">Next</button>
+          <button type="button" id="previous" class="btn btn-danger">Previous</button>
+    </p>
+</div>
+{% endblock %}
