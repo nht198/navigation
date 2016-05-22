@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block script %}
+<script src="https://code.jquery.com/jquery-2.2.2.min.js"></script>
+<script>
+$(document).ready(function() {
+  $('#led1').click(function() {
+    $.post('/led/led1');
+  });
+  $('#led2').click(function() {
+    $.post('/led/led2');
+  });
+
+});
+</script>
+	{% endblock %}
+
+{% block content %}
+<div class="led">
+	<h1>Led Control</h1>
+	<p>
+        <button type="button" id="led1" class="btn btn-success">LED 1</button>
+		LED1 IS {{led1_value}}
+   	 </p>
+	<p>
+		<button type="button" id="led2" class="btn btn-danger">LED 2</button>
+		LED2 IS {{led2_value}}
+	</p>
+</div>
+{% endblock %}
