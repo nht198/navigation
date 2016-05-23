@@ -15,23 +15,24 @@ def home():
 def about():
         return render_template('about.html')
 
+mp3_player = False
 @app.route("/mp3")
-def player():
-        music.start()
-	return render_template('mp3.html')
-
 @app.route("/mp3/<change>",methods = ['POST'])
-def mp3(change):
-#	music.start()
+def mp3(change=None):
+	global mp3_player
+	if (change == None and mp3_player == False):
+		mp3_player = True
+		music.start()
 	if (change == 'pause'):
                 music.pause()
         if (change == 'stop'):
                 music.stop()
+		mp3_player = False
         if (change == 'next'):
                 music.next()
         elif (change == 'previous'):
                 music.previous()
-	return ''
+	return render_template('mp3.html')
 
 led1_status = ''
 led2_status = ''
@@ -62,5 +63,5 @@ def led_change(led_status):
 	return ''
 
 if __name__ == "__main__":
-        app.run(host = "0.0.0.0",port = 80, debug =True)
+        app.run(host = "0.0.0.0",port = 5000, debug =True)
 
