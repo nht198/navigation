@@ -34,33 +34,27 @@ def mp3(change=None):
                 music.previous()
 	return render_template('mp3.html')
 
-led1_status = ''
-led2_status = ''
-status1 = ''
-status2 = ''
-@app.route("/led")
-def led_main(): 
-	global led1_status
-	global led2_status
-	global status1
-	global status2
-	if led1_status == True :
-		status1 = 'ON'
-	else: 	status = 'OFF'
-	if led2_status == True :
-                status2 = 'ON'
-        else: status2 = 'OFF'
-	return render_template('led.html',led1_value=status1,led2_value=status2)
 
+@app.route("/led")
 @app.route("/led/<led_status>",methods = ['POST'])
-def led_change(led_status):
-	if(led_status == 'led1'):
+def led_change(led_status= None):
+#        led1_status = None
+#        led2_status = None
+	if(led_status == 'led1on'):
 #		global led1_status
-		led1_status = led.changeled1()
-	if (led_status == 'led2'):
+		led.changeled1()
+	if (led_status == 'led1off'):
 #		global led2_status
-		led2_status = led.changeled2()
-	return ''
+		led.changeled1()	
+	return render_template('led.html')
+
+@app.route('/printledstatus')
+def printledstatus():
+	status = request.args.get('state')
+	if status == 'led1on':		
+		return jsonify(result='led 1 is on')
+	if status == 'led1off':
+		return jsonify(result='led 1 is off')
 
 if __name__ == "__main__":
         app.run(host = "0.0.0.0",port = 5000, debug =True)

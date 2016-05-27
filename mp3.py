@@ -8,7 +8,6 @@ class Player(object):
                 os.system('sudo killall omxplayer.bin')
         def start(self):
                 self.player = subprocess.Popen(["omxplayer",self.f[self.number]],stdin=subprocess.PIPE)
-                print(self.f[self.number] + "is playing")
 
         def pause(self):
                 status = self.player.poll()
@@ -33,4 +32,7 @@ class Player(object):
                 if (self.number < 0):
                         self.number = self.h -1
                 self.start()
+	
+	def name_song(self):
+		return (self.f[self.number])
 

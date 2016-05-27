@@ -1,13 +1,17 @@
 {% extends "layout.html" %}
 {% block script %}
 <script src="https://code.jquery.com/jquery-2.2.2.min.js"></script>
-<script>
+<script type=text/javascript>
 $(document).ready(function() {
-  $('#led1').click(function() {
-    $.post('/led/led1');
-  });
-  $('#led2').click(function() {
-    $.post('/led/led2');
+  $('#led1on').click(function() {
+	$.post('/led/led1on');
+	$.getJSON('/printledstatus', {state: $('#led1on').val()},
+function(data){$('#result').text(data.result)});
+	});
+  $('#led1off').click(function() {
+    	$.post('/led/led1off');
+ 	$.getJSON('/printledstatus', {state: $('#led1off').val()},
+		function(data){$('#result').text(data.result)});
   });
 
 });
@@ -18,12 +22,10 @@ $(document).ready(function() {
 <div class="led">
 	<h1>Led Control</h1>
 	<p>
-        <button type="button" id="led1" class="btn btn-success">LED 1</button>
-		LED1 IS {{led1_value}}
-   	 </p>
-	<p>
-		<button type="button" id="led2" class="btn btn-danger">LED 2</button>
-		LED2 IS {{led2_value}}
+        <button type="button" id="led1on" class="btn btn-success" value="led1on">ON</button>
+	<button type="button" id="led1off" class="btn btn-danger" value="led1off">OFF</button>
 	</p>
+	<p id=result></p>
+
 </div>
 {% endblock %}
