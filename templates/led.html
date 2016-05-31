@@ -3,18 +3,45 @@
 <script src="https://code.jquery.com/jquery-2.2.2.min.js"></script>
 <script type=text/javascript>
 $(document).ready(function() {
+	$.getJSON('/printledstatus1', {state: "abc"},
+        function(data){$('#result1').text(data.result1)});
+	$.getJSON('/printledstatus2', {state: "abc"},
+        function(data){$('#result2').text(data.result2)});
+
   $('#led1on').click(function() {
 	$.post('/led/led1on');
-	$.getJSON('/printledstatus', {state: $('#led1on').val()},
-function(data){$('#result').text(data.result)});
+	$.getJSON('/printledstatus1', {state: $('#led1on').val()},
+	function(data){$('#result1').text(data.result1)});
 	});
   $('#led1off').click(function() {
     	$.post('/led/led1off');
- 	$.getJSON('/printledstatus', {state: $('#led1off').val()},
-		function(data){$('#result').text(data.result)});
+ 	$.getJSON('/printledstatus1', {state: $('#led1off').val()},
+		function(data){$('#result1').text(data.result1)});
+  });
+
+ $('#led2on').click(function() {
+        $.post('/led/led2on');
+        $.getJSON('/printledstatus2', {state: $('#led2on').val()},
+        function(data){$('#result2').text(data.result2)});
+        });
+  $('#led2off').click(function() {
+        $.post('/led/led2off');
+        $.getJSON('/printledstatus2', {state: $('#led2off').val()},
+                function(data){$('#result2').text(data.result2)});
   });
 
 });
+$(
+function button()
+    {
+        $.getJSON('/readbutton', function(data)
+                   {
+                $("#result1").text(data.result1);
+		history.go(0);
+                setTimeout(function(){button();},300);
+            });
+    }
+);
 </script>
 	{% endblock %}
 
@@ -22,10 +49,18 @@ function(data){$('#result').text(data.result)});
 <div class="led">
 	<h1>Led Control</h1>
 	<p>
-        <button type="button" id="led1on" class="btn btn-success" value="led1on">ON</button>
-	<button type="button" id="led1off" class="btn btn-danger" value="led1off">OFF</button>
+	<h2>Led 1 </h2>
+        <button type="button" id="led1on" value="led1on">ON</button>
+	<button type="button" id="led1off" value="led1off">OFF</button>
+	<p id=result1></p>
 	</p>
-	<p id=result></p>
+	<p>
+	<h2>Led 2 </h2>
+        <button type="button" id="led2on" value="led2on">ON</button>
+        <button type="button" id="led2off" value="led2off">OFF</button>
+        <p id=result2></p>
+        </p>
+
 
 </div>
 {% endblock %}

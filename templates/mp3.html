@@ -1,19 +1,23 @@
 {% extends "layout.html" %}
 {% block script %}
 <script src="https://code.jquery.com/jquery-2.2.2.min.js"></script>
-<script>
+<script type = "text/javascript" language = "javascript">
 $(document).ready(function() {
+$('#songname').load("printsongmp3");
   $('#pause').click(function() {
     $.post('/mp3/pause');
   });
   $('#stop').click(function() {
     $.post('/mp3/stop');
   });
-  $('#next').click(function() {
-    $.post('/mp3/next');
+  $('#next').click(function(event) {
+    	$.post('/mp3/next');
+        $('#songname').load("printsongmp3");    
   });
-  $('#previous').click(function() {
-    $.post('/mp3/previous');
+
+  $('#previous').click(function(event) {
+	$.post('/mp3/previous');
+        $('#songname').load("printsongmp3");
   });
 
 });
@@ -24,13 +28,12 @@ $(document).ready(function() {
 <div class="mp3">
 	<h1>Mp3 Player</h1>
 	<p>
-          <button type="button" id="pause" class="btn btn-success">Pause</button>
-          <button type="button" id="stop" class="btn btn-danger">Stop</button>
-          <button type="button" id="next" class="btn btn-success">Next</button>
-          <button type="button" id="previous" class="btn btn-danger">Previous</button>
+          <button type="button" id="pause" >Pause</button>
+          <button type="button" id="stop" >Stop</button>
+          <button type="button" id="next" onClick="history.go(0)">Next</button>
+          <button type="button" id="previous" onClick="history.go(0)">Previous</button>
 	</p>
-	<h2>
-	{{mp3_song}} is playing....
-	<h2>
+	<h2 id="songname">
+	</h2>
 </div>
 {% endblock %}
